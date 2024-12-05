@@ -1,18 +1,34 @@
 ﻿using System;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace LabWork
 {
-    // Даний проект є шаблоном для виконання лабораторних робіт
-    // з курсу "Об'єктно-орієнтоване програмування та патерни проектування"
-    // Необхідно змінювати і дописувати код лише в цьому проекті
-    // Відео-інструкції щодо роботи з github можна переглянути 
-    // за посиланням https://www.youtube.com/@ViktorZhukovskyy/videos 
     class Program
     {
         static void Main(string[] args)
         {
-            
-            Console.WriteLine("Hello World!");
+            Console.OutputEncoding = Encoding.UTF8;
+
+            Console.Write("Введіть текст: ");
+            string inputText = Console.ReadLine();
+
+            const string pattern = @"^[A-Za-z0-9\s.,!?'\-]+$";
+            bool isEnglishText = Regex.IsMatch(inputText, pattern) && ContainsEnglishLettersOnly(inputText);
+
+            if (isEnglishText)
+            {
+                Console.WriteLine("Текст є англійською мовою.");
+            }
+            else
+            {
+                Console.WriteLine("Текст не є англійською мовою.");
+            }
+        }
+
+        private static bool ContainsEnglishLettersOnly(string text)
+        {
+            return Regex.IsMatch(text, @"[A-Za-z]");
         }
     }
 }
