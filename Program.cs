@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LabWork
@@ -8,27 +7,27 @@ namespace LabWork
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Console.Write("Введіть текст: ");
+            Console.WriteLine("Введіть текст:");
             string inputText = Console.ReadLine();
 
-            const string pattern = @"^[A-Za-z0-9\s.,!?'\-]+$";
-            bool isEnglishText = Regex.IsMatch(inputText, pattern) && ContainsEnglishLettersOnly(inputText);
+            const string phonePattern = @"\+3\(\d{3}\)-\d{3}-\d{4}";
 
-            if (isEnglishText)
+            MatchCollection matches = Regex.Matches(inputText, phonePattern);
+
+            if (matches.Count > 0)
             {
-                Console.WriteLine("Текст є англійською мовою.");
+                Console.WriteLine("Знайдені номери телефонів:");
+                foreach (Match match in matches)
+                {
+                    Console.WriteLine(match.Value);
+                }
             }
             else
             {
-                Console.WriteLine("Текст не є англійською мовою.");
+                Console.WriteLine("Номери телефонів не знайдено.");
             }
-        }
-
-        private static bool ContainsEnglishLettersOnly(string text)
-        {
-            return Regex.IsMatch(text, @"[A-Za-z]");
         }
     }
 }
